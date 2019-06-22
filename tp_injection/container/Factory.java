@@ -1,4 +1,4 @@
-package tp_injection.container;
+package container;
 
 
 
@@ -22,14 +22,18 @@ public class Factory{
       try{
          InputStream inputStream = new FileInputStream(new File(fileName));
         //ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        //InputStream inputStream = classLoader.getResourceAsStream(fileName);
+        //InputStream inputStreamm = classLoader.getResourceAsStream(fileName);
          return new FileSystemPropsApplicationContext(inputStream);
       }catch(Exception e){
+          e.printStackTrace();
+          System.out.println("Exception thrown first level.");
           try{
           // serait-ce une URL ? à affiner
             InputStream inputStream = new URL(fileName).openStream();
             return new FileSystemPropsApplicationContext(inputStream);
           }catch(Exception exc){
+              exc.printStackTrace();
+              System.out.println("Exception thrown second level.");
           }
           e.printStackTrace();
           return null;
